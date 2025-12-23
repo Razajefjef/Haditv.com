@@ -1,339 +1,305 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.1">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #8cd3fe; -webkit-text-stroke: #8cd3fe}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #c27e65; -webkit-text-stroke: #c27e65}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca; min-height: 16.0px}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #6d7378; -webkit-text-stroke: #6d7378}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #71c083; -webkit-text-stroke: #71c083}
-    span.s1 {font-kerning: none; background-color: #171818}
-    span.s2 {font-kerning: none; color: #8cd3fe; background-color: #171818; -webkit-text-stroke: 0px #8cd3fe}
-    span.s3 {font-kerning: none; color: #6d6d6d; background-color: #171818; -webkit-text-stroke: 0px #6d6d6d}
-    span.s4 {font-kerning: none; color: #cacaca; background-color: #171818; -webkit-text-stroke: 0px #cacaca}
-    span.s5 {font-kerning: none; color: #c27e65; background-color: #171818; -webkit-text-stroke: 0px #c27e65}
-    span.s6 {font-kerning: none; color: #4689cc; background-color: #171818; -webkit-text-stroke: 0px #4689cc}
-    span.s7 {font-kerning: none; color: #b76ff7; background-color: #171818; -webkit-text-stroke: 0px #b76ff7}
-    span.s8 {font-kerning: none; color: #d4d4d4; background-color: #171818; -webkit-text-stroke: 0px #d4d4d4}
-    span.s9 {font-kerning: none}
-    span.s10 {font-kerning: none; color: #71c083; background-color: #171818; -webkit-text-stroke: 0px #71c083}
-    span.s11 {font-kerning: none; color: #a7c598; background-color: #171818; -webkit-text-stroke: 0px #a7c598}
-    span.s12 {font-kerning: none; color: #f67c30; background-color: #171818; -webkit-text-stroke: 0px #f67c30}
-    span.s13 {font-kerning: none; color: #36c0a0; background-color: #171818; -webkit-text-stroke: 0px #36c0a0}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>HadiTV Live - Official App</title>
+    
+    <!-- CSS & Frameworks -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --hadi-blue: #007bff;
+            --hadi-dark: #060b14;
+            --safe-top: env(safe-area-inset-top);
+            --safe-bottom: env(safe-area-inset-bottom);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--hadi-dark); 
+            color: white; 
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+            user-select: none;
+            overscroll-behavior-y: contain;
+        }
+
+        /* Splash Screen - Visual Match for Main_P1.jpg */
+        #splash-screen {
+            background-color: #060b14;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .hadi-text {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: white;
+            line-height: 1;
+        }
+
+        .tv-text { color: var(--hadi-blue); }
+
+        .subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 0.8em;
+            color: #ffffff;
+            margin-top: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .btn-main {
+            background-color: var(--hadi-blue);
+            color: white;
+            padding: 16px 65px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.4);
+            cursor: pointer;
+        }
+
+        /* Main App Container */
+        .header-white {
+            background-color: white;
+            color: #111;
+            padding: calc(14px + var(--safe-top)) 20px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .channel-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: #000;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Player Overlay */
+        #player-view {
+            background-color: #000;
+            padding-top: var(--safe-top);
+            padding-bottom: var(--safe-bottom);
+        }
+
+        .social-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1e293b;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .hide { display: none !important; }
+        
+        .active-press:active { transform: scale(0.96); opacity: 0.8; }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">html</span><span class="s4"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s5">"en"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s5">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"mobile-web-app-capable"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"yes"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"apple-mobile-web-app-capable"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"yes"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">title</span><span class="s3">&gt;</span><span class="s1">HadiTV Live - Official App</span><span class="s3">&lt;/</span><span class="s6">title</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- CSS &amp; Frameworks --&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">link</span><span class="s4"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s1">"stylesheet"</span><span class="s4"> </span><span class="s2">href</span><span class="s3">=</span><span class="s1">"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s7">@import</span><span class="s4"> </span><span class="s5">url</span><span class="s8">(</span><span class="s1">'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap'</span><span class="s8">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">:root</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">--hadi-blue:</span><span class="s1"> #007bff</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">--hadi-dark:</span><span class="s1"> #060b14</span><span class="s8">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">--safe-top:</span><span class="s4"> </span><span class="s1">env(safe-area-inset-top)</span><span class="s8">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">--safe-bottom:</span><span class="s4"> </span><span class="s1">env(safe-area-inset-bottom)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">body</span><span class="s1"> </span><span class="s8">{</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s1"> </span><span class="s10">'Inter'</span><span class="s8">,</span><span class="s1"> </span><span class="s5">sans-serif</span><span class="s8">;</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s5">var(--hadi-dark)</span><span class="s8">;</span><span class="s4"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s5">white</span><span class="s8">;</span><span class="s1"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s11">0</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s11">0</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">-webkit-tap-highlight-color:</span><span class="s4"> </span><span class="s5">transparent</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow-x:</span><span class="s1"> </span><span class="s5">hidden</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">user-select:</span><span class="s1"> </span><span class="s5">none</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">overscroll-behavior-y:</span><span class="s4"> </span><span class="s5">contain</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Splash Screen - Visual Match for Main_P1.jpg */</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#splash-screen</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #060b14</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s5">flex</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">flex-direction:</span><span class="s4"> </span><span class="s5">column</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s11">1000</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.hadi-text</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s11">4rem</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s11">800</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">letter-spacing:</span><span class="s4"> </span><span class="s11">-2px</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s5">white</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">line-height:</span><span class="s1"> </span><span class="s11">1</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s6">.tv-text</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> </span><span class="s2">color:</span><span class="s4"> </span><span class="s1">var(--hadi-blue)</span><span class="s8">;</span><span class="s4"> </span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.subtitle</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s11">0.8rem</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">letter-spacing:</span><span class="s4"> </span><span class="s11">0.8em</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #ffffff</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s11">1rem</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s11">400</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">text-transform:</span><span class="s4"> </span><span class="s5">uppercase</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">opacity:</span><span class="s1"> </span><span class="s11">0.8</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.btn-main</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s5">var(--hadi-blue)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s5">white</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s11">16px</span><span class="s1"> </span><span class="s11">65px</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s4"> </span><span class="s11">50px</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s11">700</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s11">1rem</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s11">0</span><span class="s1"> </span><span class="s11">4px</span><span class="s1"> </span><span class="s11">20px</span><span class="s1"> </span><span class="s5">rgba(</span><span class="s11">0</span><span class="s8">,</span><span class="s1"> </span><span class="s11">123</span><span class="s8">,</span><span class="s1"> </span><span class="s11">255</span><span class="s8">,</span><span class="s1"> </span><span class="s11">0.4</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s5">pointer</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Main App Container */</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.header-white</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-color:</span><span class="s4"> </span><span class="s5">white</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> #111</span><span class="s8">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s4"> </span><span class="s1">calc(</span><span class="s11">14px</span><span class="s4"> </span><span class="s8">+</span><span class="s4"> </span><span class="s1">var(--safe-top))</span><span class="s4"> </span><span class="s11">20px</span><span class="s4"> </span><span class="s11">14px</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s5">flex</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s5">space-between</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s5">sticky</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">top:</span><span class="s1"> </span><span class="s11">0</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s11">50</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s11">0</span><span class="s1"> </span><span class="s11">2px</span><span class="s1"> </span><span class="s11">10px</span><span class="s1"> </span><span class="s5">rgba(</span><span class="s11">0</span><span class="s8">,</span><span class="s11">0</span><span class="s8">,</span><span class="s11">0</span><span class="s8">,</span><span class="s11">0.05</span><span class="s5">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.channel-thumbnail</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s11">100%</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">aspect-ratio:</span><span class="s1"> </span><span class="s11">16</span><span class="s8">/</span><span class="s11">9</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #000</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s4"> </span><span class="s11">14px</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow:</span><span class="s1"> </span><span class="s5">hidden</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s5">relative</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-size:</span><span class="s4"> </span><span class="s5">cover</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">background-position:</span><span class="s4"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Player Overlay */</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#player-view</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #000</span><span class="s8">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">padding-top:</span><span class="s4"> </span><span class="s1">var(--safe-top)</span><span class="s8">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">padding-bottom:</span><span class="s4"> </span><span class="s1">var(--safe-bottom)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.social-btn</span><span class="s4"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s11">52px</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s11">52px</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-radius:</span><span class="s4"> </span><span class="s11">50%</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s5">flex</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s5">center</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #1e293b</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s5">white</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s11">1.3rem</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.hide</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> </span><span class="s2">display:</span><span class="s1"> </span><span class="s5">none</span><span class="s1"> </span><span class="s7">!important</span><span class="s8">;</span><span class="s1"> </span><span class="s8">}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.active-press:active</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> </span><span class="s2">transform:</span><span class="s4"> </span><span class="s5">scale(</span><span class="s11">0.96</span><span class="s5">)</span><span class="s8">;</span><span class="s4"> </span><span class="s2">opacity:</span><span class="s4"> </span><span class="s11">0.8</span><span class="s8">;</span><span class="s4"> </span><span class="s8">}</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Splash Screen (Referencing Main_P1.jpg) --&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"splash-screen"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fixed inset-0 p-6"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center mb-20"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"hadi-text"</span><span class="s3">&gt;</span><span class="s1">HADI</span><span class="s3">&lt;</span><span class="s6">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"tv-text"</span><span class="s3">&gt;</span><span class="s1">TV</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"subtitle"</span><span class="s3">&gt;</span><span class="s1">GLOBAL NETWORK</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s1">"enterApp()"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"btn-main active:scale-95 transition-transform"</span><span class="s3">&gt;</span><span class="s4">WATCH LIVE</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"absolute bottom-12 text-center w-full left-0 opacity-40"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-10 h-[1px] bg-white mx-auto mb-2"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-[10px] tracking-[0.3em] uppercase"</span><span class="s3">&gt;</span><span class="s4">Official Application</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Main Content Area --&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"main-content"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hide"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">header</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"header-white"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-black text-2xl tracking-tighter"</span><span class="s3">&gt;</span><span class="s4">HADI</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-black text-2xl tracking-tighter text-blue-600"</span><span class="s3">&gt;</span><span class="s4">TV</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex space-x-6 text-xl"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">i</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"fas fa-search"</span><span class="s3">&gt;&lt;/</span><span class="s6">i</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">i</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"fas fa-bars"</span><span class="s3">&gt;&lt;/</span><span class="s6">i</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">header</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">main</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"p-5"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-between items-center mb-6"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-xl font-extrabold"</span><span class="s3">&gt;</span><span class="s1">Live Channels</span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-blue-500 text-sm font-bold"</span><span class="s3">&gt;</span><span class="s1">Official Streams</span><span class="s3">&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"grid grid-cols-1 gap-8 mb-24"</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"channels-grid"</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">&lt;!-- Channel items will be injected here --&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">main</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Fullscreen Player View --&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"player-view"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"hide fixed inset-0 z-[200] overflow-y-auto"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center justify-between p-4 bg-black/60 backdrop-blur-md sticky top-0 z-[210]"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s1">"closePlayer()"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-3"</span><span class="s3">&gt;&lt;</span><span class="s6">i</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fas fa-arrow-left text-xl"</span><span class="s3">&gt;&lt;/</span><span class="s6">i</span><span class="s3">&gt;&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"player-header-title"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold tracking-tight"</span><span class="s3">&gt;</span><span class="s4">HadiTV Live</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"w-12"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-full aspect-video bg-black sticky top-0 z-[205]"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">video</span><span class="s4"> </span><span class="s1">id</span><span class="s3">=</span><span class="s5">"video-stream"</span><span class="s4"> </span><span class="s1">class</span><span class="s3">=</span><span class="s5">"w-full h-full"</span><span class="s4"> </span><span class="s1">controls</span><span class="s4"> </span><span class="s1">autoplay</span><span class="s4"> </span><span class="s1">playsinline</span><span class="s3">&gt;&lt;/</span><span class="s6">video</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"p-6 bg-[#060b14]"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex justify-between items-start mb-10"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">h1</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"player-title"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-3xl font-black"</span><span class="s3">&gt;</span><span class="s4">Channel Name</span><span class="s3">&lt;/</span><span class="s6">h1</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center text-blue-500 font-bold mt-2 text-xs uppercase tracking-widest"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"w-2 h-2 bg-red-600 rounded-full mr-2 animate-pulse"</span><span class="s3">&gt;&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span><span class="s4"> Streaming Live</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"flex space-x-3"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"social-btn active-press"</span><span class="s3">&gt;&lt;</span><span class="s6">i</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fas fa-share-alt"</span><span class="s3">&gt;&lt;/</span><span class="s6">i</span><span class="s3">&gt;&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"social-btn active-press"</span><span class="s3">&gt;&lt;</span><span class="s6">i</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"far fa-heart"</span><span class="s3">&gt;&lt;/</span><span class="s6">i</span><span class="s3">&gt;&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"mb-10"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-4"</span><span class="s3">&gt;</span><span class="s4">Official Social Links</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"social-links"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex flex-wrap gap-4"</span><span class="s3">&gt;&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"bg-slate-900/40 rounded-2xl p-6 mb-10 border border-white/5"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"flex items-center gap-3 mb-4"</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">i</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"fas fa-satellite text-blue-500"</span><span class="s3">&gt;&lt;/</span><span class="s6">i</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">h3</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"font-bold text-xs tracking-widest uppercase"</span><span class="s3">&gt;</span><span class="s4">Reception Details</span><span class="s3">&lt;/</span><span class="s6">h3</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"player-freq"</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-gray-400 text-sm leading-relaxed whitespace-pre-line font-medium"</span><span class="s3">&gt;&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> channelsData </span><span class="s8">=</span><span class="s1"> </span><span class="s8">[</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">1</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV1"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Urdu-English"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv1.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: PakSat MM1\nFrequency: 4099\nPolarity: Horizontal\nSymbol Rate: 3200"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> yt</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.youtube.com/@HadiTVUR"</span><span class="s8">,</span><span class="s4"> fb</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.facebook.com/HadiTV.OfficialPage"</span><span class="s8">,</span><span class="s4"> ig</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.instagram.com/haditv1official"</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://ur.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">2</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV2"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Malay"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv2.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: Astra 4A\nRegional Beam"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> yt</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.youtube.com/@haditv2indonesia"</span><span class="s8">,</span><span class="s4"> fb</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.facebook.com/Hadi.Tv.Indonesia"</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://id.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">3</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV3"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Azeri"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv3.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: Hotbird\nFrequency: 11179\nPolarity: Horizontal\nSymbol Rate: 27500"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> yt</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.youtube.com/channel/UCfyGvZupdgD6IKf-AeYzzSQ"</span><span class="s8">,</span><span class="s4"> ig</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.instagram.com/haditv3_official"</span><span class="s8">,</span><span class="s4"> tk</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.tiktok.com/@haditv3_az"</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://az.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">4</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV4"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Farsi"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv4.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: Eutelsat 7C"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> yt</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.youtube.com/@mostabserin"</span><span class="s8">,</span><span class="s4"> ig</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.instagram.com/haditv_farsi"</span><span class="s8">,</span><span class="s4"> tg</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://t.me/haditvfarsi"</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://fa.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">5</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV5"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Hausa-French-English"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv5.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: SES-5"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> fb</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://m.facebook.com/ha.haditv/"</span><span class="s8">,</span><span class="s4"> wa</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://chat.whatsapp.com/Erjj9QxcMBn3jcTFoYBgLL"</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://ha.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">6</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV6"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Pashto-Dari"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv6.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: Yahsat 1A\nFrequency: 11938\nPolarity: Horizontal"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://fd.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">7</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV7"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Turkish-Kurdi"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv7.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: Turksat 4A"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://ku.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">},</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s8">{</span><span class="s4"> id</span><span class="s8">:</span><span class="s4"> </span><span class="s12">8</span><span class="s8">,</span><span class="s4"> name</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"HadiTV8"</span><span class="s8">,</span><span class="s4"> lang</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Swahili"</span><span class="s8">,</span><span class="s4"> url</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://g.decdn.net/haditv.co.uk/haditv8.m3u8"</span><span class="s8">,</span><span class="s4"> frq</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"Satellite: Intelsat 20"</span><span class="s8">,</span><span class="s4"> socials</span><span class="s8">:</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> yt</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"http://www.youtube.com/@alhadimedia-i8b"</span><span class="s8">,</span><span class="s4"> fb</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.facebook.com/haditvswahili8"</span><span class="s8">,</span><span class="s4"> ig</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://www.instagram.com/haditvswahili"</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">"https://sw.haditv.co.uk"</span><span class="s4"> </span><span class="s8">}</span><span class="s4"> </span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">];</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">let</span><span class="s1"> hlsInstance </span><span class="s8">=</span><span class="s1"> </span><span class="s7">null</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">const</span><span class="s1"> videoElement </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'video-stream'</span><span class="s8">);</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> enterApp</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'splash-screen'</span><span class="s8">).</span><span class="s1">style</span><span class="s8">.</span><span class="s1">display </span><span class="s8">=</span><span class="s1"> </span><span class="s10">'none'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'main-content'</span><span class="s8">).</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s10">'hide'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>renderChannels</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> renderChannels</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">const</span><span class="s1"> grid </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'channels-grid'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>grid</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> channelsData</span><span class="s8">.</span><span class="s1">map</span><span class="s8">(</span><span class="s1">c </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s10">`</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div onclick="openPlayer(</span><span class="s8">${</span><span class="s4">c</span><span class="s8">.</span><span class="s4">id</span><span class="s8">}</span><span class="s1">)" class="active:opacity-60 transition-all"&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="channel-thumbnail shadow-xl" style="background-image: url('https://placehold.co/600x400/060b14/ffffff?text=</span><span class="s8">${</span><span class="s4">c</span><span class="s8">.</span><span class="s4">name</span><span class="s8">}</span><span class="s1">')"&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"&gt;&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute inset-0 flex items-center justify-center"&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20"&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;i class="fas fa-play text-white ml-1"&gt;&lt;/i&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div class="absolute bottom-4 left-4"&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;span class="bg-blue-600 text-[9px] px-3 py-1 rounded-md font-black uppercase tracking-widest"&gt;Live Now&lt;/span&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="mt-4 flex justify-between items-center px-1"&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h3 class="font-bold text-xl tracking-tight"&gt;</span><span class="s8">${</span><span class="s4">c</span><span class="s8">.</span><span class="s4">name</span><span class="s8">}</span><span class="s1">&lt;/h3&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1"&gt;</span><span class="s8">${</span><span class="s4">c</span><span class="s8">.</span><span class="s4">lang</span><span class="s8">}</span><span class="s1">&lt;/p&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;i class="fas fa-ellipsis-v text-gray-800 p-2"&gt;&lt;/i&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">            </span>`</span><span class="s8">).</span><span class="s4">join</span><span class="s8">(</span><span class="s1">''</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> openPlayer</span><span class="s8">(</span><span class="s1">id</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">const</span><span class="s1"> channel </span><span class="s8">=</span><span class="s1"> channelsData</span><span class="s8">.</span><span class="s1">find</span><span class="s8">(</span><span class="s1">c </span><span class="s8">=&gt;</span><span class="s1"> c</span><span class="s8">.</span><span class="s1">id </span><span class="s8">===</span><span class="s1"> id</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(!</span><span class="s1">channel</span><span class="s8">)</span><span class="s1"> </span><span class="s7">return</span><span class="s8">;</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'player-header-title'</span><span class="s8">).</span><span class="s1">innerText </span><span class="s8">=</span><span class="s1"> channel</span><span class="s8">.</span><span class="s1">name</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'player-title'</span><span class="s8">).</span><span class="s1">innerText </span><span class="s8">=</span><span class="s1"> channel</span><span class="s8">.</span><span class="s1">name</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'player-freq'</span><span class="s8">).</span><span class="s1">innerText </span><span class="s8">=</span><span class="s1"> channel</span><span class="s8">.</span><span class="s1">frq</span><span class="s8">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">const</span><span class="s1"> socialBox </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'social-links'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>socialBox</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s10">''</span><span class="s8">;</span></p>
-<p class="p7"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s7">const</span><span class="s4"> map </span><span class="s8">=</span><span class="s4"> </span><span class="s8">{</span><span class="s4"> yt</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-youtube'</span><span class="s8">,</span><span class="s4"> fb</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-facebook'</span><span class="s8">,</span><span class="s4"> ig</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-instagram'</span><span class="s8">,</span><span class="s4"> tk</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-tiktok'</span><span class="s8">,</span><span class="s4"> tg</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-telegram'</span><span class="s8">,</span><span class="s4"> wa</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-whatsapp'</span><span class="s8">,</span><span class="s4"> web</span><span class="s8">:</span><span class="s4"> </span><span class="s1">'fa-globe'</span><span class="s4"> </span><span class="s8">};</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s13">Object</span><span class="s8">.</span><span class="s1">entries</span><span class="s8">(</span><span class="s1">channel</span><span class="s8">.</span><span class="s1">socials</span><span class="s8">).</span><span class="s1">forEach</span><span class="s8">(([</span><span class="s1">key</span><span class="s8">,</span><span class="s1"> val</span><span class="s8">])</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">val </span><span class="s8">&amp;&amp;</span><span class="s1"> val </span><span class="s8">!==</span><span class="s1"> </span><span class="s10">'-'</span><span class="s8">)</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s7">const</span><span class="s1"> a </span><span class="s8">=</span><span class="s1"> document</span><span class="s8">.</span><span class="s1">createElement</span><span class="s8">(</span><span class="s10">'a'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>a</span><span class="s8">.</span><span class="s1">href </span><span class="s8">=</span><span class="s1"> val</span><span class="s8">;</span><span class="s1"> a</span><span class="s8">.</span><span class="s1">className </span><span class="s8">=</span><span class="s1"> </span><span class="s10">"social-btn active-press"</span><span class="s8">;</span><span class="s1"> a</span><span class="s8">.</span><span class="s1">target </span><span class="s8">=</span><span class="s1"> </span><span class="s10">"_blank"</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>a</span><span class="s8">.</span><span class="s1">innerHTML </span><span class="s8">=</span><span class="s1"> </span><span class="s10">`&lt;i class="fab </span><span class="s8">${</span><span class="s1">map</span><span class="s8">[</span><span class="s1">key</span><span class="s8">]}</span><span class="s10">"&gt;&lt;/i&gt;`</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>socialBox</span><span class="s8">.</span><span class="s1">appendChild</span><span class="s8">(</span><span class="s1">a</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">});</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(</span><span class="s13">Hls</span><span class="s8">.</span><span class="s1">isSupported</span><span class="s8">())</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">hlsInstance</span><span class="s8">)</span><span class="s1"> hlsInstance</span><span class="s8">.</span><span class="s1">destroy</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>hlsInstance </span><span class="s8">=</span><span class="s1"> </span><span class="s7">new</span><span class="s1"> </span><span class="s13">Hls</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>hlsInstance</span><span class="s8">.</span><span class="s1">loadSource</span><span class="s8">(</span><span class="s1">channel</span><span class="s8">.</span><span class="s1">url</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>hlsInstance</span><span class="s8">.</span><span class="s1">attachMedia</span><span class="s8">(</span><span class="s1">videoElement</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>hlsInstance</span><span class="s8">.</span><span class="s1">on</span><span class="s8">(</span><span class="s13">Hls</span><span class="s8">.</span><span class="s13">Events</span><span class="s8">.</span><span class="s13">MANIFEST_PARSED</span><span class="s8">,</span><span class="s1"> </span><span class="s8">()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> videoElement</span><span class="s8">.</span><span class="s1">play</span><span class="s8">().</span><span class="s7">catch</span><span class="s8">(()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{}));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span><span class="s1"> </span><span class="s7">else</span><span class="s1"> </span><span class="s7">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">videoElement</span><span class="s8">.</span><span class="s1">canPlayType</span><span class="s8">(</span><span class="s10">'application/vnd.apple.mpegurl'</span><span class="s8">))</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>videoElement</span><span class="s8">.</span><span class="s1">src </span><span class="s8">=</span><span class="s1"> channel</span><span class="s8">.</span><span class="s1">url</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>videoElement</span><span class="s8">.</span><span class="s1">play</span><span class="s8">().</span><span class="s7">catch</span><span class="s8">(()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{});</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'player-view'</span><span class="s8">).</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">remove</span><span class="s8">(</span><span class="s10">'hide'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">body</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">overflow </span><span class="s8">=</span><span class="s1"> </span><span class="s10">'hidden'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>window</span><span class="s8">.</span><span class="s1">history</span><span class="s8">.</span><span class="s1">pushState</span><span class="s8">({</span><span class="s1">view</span><span class="s8">:</span><span class="s1"> </span><span class="s10">'player'</span><span class="s8">},</span><span class="s1"> </span><span class="s10">''</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s7">function</span><span class="s1"> closePlayer</span><span class="s8">()</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>videoElement</span><span class="s8">.</span><span class="s1">pause</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">hlsInstance</span><span class="s8">)</span><span class="s1"> hlsInstance</span><span class="s8">.</span><span class="s1">stopLoad</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'player-view'</span><span class="s8">).</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">add</span><span class="s8">(</span><span class="s10">'hide'</span><span class="s8">);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>document</span><span class="s8">.</span><span class="s1">body</span><span class="s8">.</span><span class="s1">style</span><span class="s8">.</span><span class="s1">overflow </span><span class="s8">=</span><span class="s1"> </span><span class="s10">'auto'</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(</span><span class="s1">window</span><span class="s8">.</span><span class="s1">history</span><span class="s8">.</span><span class="s1">state</span><span class="s8">?.</span><span class="s1">view </span><span class="s8">===</span><span class="s1"> </span><span class="s10">'player'</span><span class="s8">)</span><span class="s1"> window</span><span class="s8">.</span><span class="s1">history</span><span class="s8">.</span><span class="s1">back</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p5"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>window</span><span class="s8">.</span><span class="s1">onpopstate </span><span class="s8">=</span><span class="s1"> </span><span class="s8">()</span><span class="s1"> </span><span class="s8">=&gt;</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">if</span><span class="s1"> </span><span class="s8">(!</span><span class="s1">document</span><span class="s8">.</span><span class="s1">getElementById</span><span class="s8">(</span><span class="s10">'player-view'</span><span class="s8">).</span><span class="s1">classList</span><span class="s8">.</span><span class="s1">contains</span><span class="s8">(</span><span class="s10">'hide'</span><span class="s8">))</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>closePlayer</span><span class="s8">();</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">};</span></p>
-<p class="p1"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
+
+    <!-- Splash Screen (Referencing Main_P1.jpg) -->
+    <div id="splash-screen" class="fixed inset-0 p-6">
+        <div class="text-center mb-20">
+            <div class="hadi-text">HADI<span class="tv-text">TV</span></div>
+            <div class="subtitle">GLOBAL NETWORK</div>
+        </div>
+        <button onclick="enterApp()" class="btn-main active:scale-95 transition-transform">WATCH LIVE</button>
+        <div class="absolute bottom-12 text-center w-full left-0 opacity-40">
+            <div class="w-10 h-[1px] bg-white mx-auto mb-2"></div>
+            <div class="text-[10px] tracking-[0.3em] uppercase">Official Application</div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div id="main-content" class="hide">
+        <header class="header-white">
+            <div class="flex items-center">
+                <span class="font-black text-2xl tracking-tighter">HADI</span><span class="font-black text-2xl tracking-tighter text-blue-600">TV</span>
+            </div>
+            <div class="flex space-x-6 text-xl">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-bars"></i>
+            </div>
+        </header>
+
+        <main class="p-5">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-extrabold">Live Channels</h2>
+                <span class="text-blue-500 text-sm font-bold">Official Streams</span>
+            </div>
+            <div class="grid grid-cols-1 gap-8 mb-24" id="channels-grid">
+                <!-- Channel items will be injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Fullscreen Player View -->
+    <div id="player-view" class="hide fixed inset-0 z-[200] overflow-y-auto">
+        <div class="flex items-center justify-between p-4 bg-black/60 backdrop-blur-md sticky top-0 z-[210]">
+            <button onclick="closePlayer()" class="p-3"><i class="fas fa-arrow-left text-xl"></i></button>
+            <div id="player-header-title" class="font-bold tracking-tight">HadiTV Live</div>
+            <div class="w-12"></div>
+        </div>
+
+        <div class="w-full aspect-video bg-black sticky top-0 z-[205]">
+            <video id="video-stream" class="w-full h-full" controls autoplay playsinline></video>
+        </div>
+
+        <div class="p-6 bg-[#060b14]">
+            <div class="flex justify-between items-start mb-10">
+                <div>
+                    <h1 id="player-title" class="text-3xl font-black">Channel Name</h1>
+                    <div class="flex items-center text-blue-500 font-bold mt-2 text-xs uppercase tracking-widest">
+                        <span class="w-2 h-2 bg-red-600 rounded-full mr-2 animate-pulse"></span> Streaming Live
+                    </div>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="social-btn active-press"><i class="fas fa-share-alt"></i></button>
+                    <button class="social-btn active-press"><i class="far fa-heart"></i></button>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <p class="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-4">Official Social Links</p>
+                <div id="social-links" class="flex flex-wrap gap-4"></div>
+            </div>
+
+            <div class="bg-slate-900/40 rounded-2xl p-6 mb-10 border border-white/5">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-satellite text-blue-500"></i>
+                    <h3 class="font-bold text-xs tracking-widest uppercase">Reception Details</h3>
+                </div>
+                <p id="player-freq" class="text-gray-400 text-sm leading-relaxed whitespace-pre-line font-medium"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const channelsData = [
+            { id: 1, name: "HadiTV1", lang: "Urdu-English", url: "https://g.decdn.net/haditv.co.uk/haditv1.m3u8", frq: "Satellite: PakSat MM1\nFrequency: 4099\nPolarity: Horizontal\nSymbol Rate: 3200", socials: { yt: "https://www.youtube.com/@HadiTVUR", fb: "https://www.facebook.com/HadiTV.OfficialPage", ig: "https://www.instagram.com/haditv1official", web: "https://ur.haditv.co.uk" } },
+            { id: 2, name: "HadiTV2", lang: "Malay", url: "https://g.decdn.net/haditv.co.uk/haditv2.m3u8", frq: "Satellite: Astra 4A\nRegional Beam", socials: { yt: "https://www.youtube.com/@haditv2indonesia", fb: "https://www.facebook.com/Hadi.Tv.Indonesia", web: "https://id.haditv.co.uk" } },
+            { id: 3, name: "HadiTV3", lang: "Azeri", url: "https://g.decdn.net/haditv.co.uk/haditv3.m3u8", frq: "Satellite: Hotbird\nFrequency: 11179\nPolarity: Horizontal\nSymbol Rate: 27500", socials: { yt: "https://www.youtube.com/channel/UCfyGvZupdgD6IKf-AeYzzSQ", ig: "https://www.instagram.com/haditv3_official", tk: "https://www.tiktok.com/@haditv3_az", web: "https://az.haditv.co.uk" } },
+            { id: 4, name: "HadiTV4", lang: "Farsi", url: "https://g.decdn.net/haditv.co.uk/haditv4.m3u8", frq: "Satellite: Eutelsat 7C", socials: { yt: "https://www.youtube.com/@mostabserin", ig: "https://www.instagram.com/haditv_farsi", tg: "https://t.me/haditvfarsi", web: "https://fa.haditv.co.uk" } },
+            { id: 5, name: "HadiTV5", lang: "Hausa-French-English", url: "https://g.decdn.net/haditv.co.uk/haditv5.m3u8", frq: "Satellite: SES-5", socials: { fb: "https://m.facebook.com/ha.haditv/", wa: "https://chat.whatsapp.com/Erjj9QxcMBn3jcTFoYBgLL", web: "https://ha.haditv.co.uk" } },
+            { id: 6, name: "HadiTV6", lang: "Pashto-Dari", url: "https://g.decdn.net/haditv.co.uk/haditv6.m3u8", frq: "Satellite: Yahsat 1A\nFrequency: 11938\nPolarity: Horizontal", socials: { web: "https://fd.haditv.co.uk" } },
+            { id: 7, name: "HadiTV7", lang: "Turkish-Kurdi", url: "https://g.decdn.net/haditv.co.uk/haditv7.m3u8", frq: "Satellite: Turksat 4A", socials: { web: "https://ku.haditv.co.uk" } },
+            { id: 8, name: "HadiTV8", lang: "Swahili", url: "https://g.decdn.net/haditv.co.uk/haditv8.m3u8", frq: "Satellite: Intelsat 20", socials: { yt: "http://www.youtube.com/@alhadimedia-i8b", fb: "https://www.facebook.com/haditvswahili8", ig: "https://www.instagram.com/haditvswahili", web: "https://sw.haditv.co.uk" } }
+        ];
+
+        let hlsInstance = null;
+        const videoElement = document.getElementById('video-stream');
+
+        function enterApp() {
+            document.getElementById('splash-screen').style.display = 'none';
+            document.getElementById('main-content').classList.remove('hide');
+            renderChannels();
+        }
+
+        function renderChannels() {
+            const grid = document.getElementById('channels-grid');
+            grid.innerHTML = channelsData.map(c => `
+                <div onclick="openPlayer(${c.id})" class="active:opacity-60 transition-all">
+                    <div class="channel-thumbnail shadow-xl" style="background-image: url('https://placehold.co/600x400/060b14/ffffff?text=${c.name}')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-blue-600 text-[9px] px-3 py-1 rounded-md font-black uppercase tracking-widest">Live Now</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center px-1">
+                        <div>
+                            <h3 class="font-bold text-xl tracking-tight">${c.name}</h3>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1">${c.lang}</p>
+                        </div>
+                        <i class="fas fa-ellipsis-v text-gray-800 p-2"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openPlayer(id) {
+            const channel = channelsData.find(c => c.id === id);
+            if (!channel) return;
+
+            document.getElementById('player-header-title').innerText = channel.name;
+            document.getElementById('player-title').innerText = channel.name;
+            document.getElementById('player-freq').innerText = channel.frq;
+            
+            const socialBox = document.getElementById('social-links');
+            socialBox.innerHTML = '';
+            const map = { yt: 'fa-youtube', fb: 'fa-facebook', ig: 'fa-instagram', tk: 'fa-tiktok', tg: 'fa-telegram', wa: 'fa-whatsapp', web: 'fa-globe' };
+            
+            Object.entries(channel.socials).forEach(([key, val]) => {
+                if (val && val !== '-') {
+                    const a = document.createElement('a');
+                    a.href = val; a.className = "social-btn active-press"; a.target = "_blank";
+                    a.innerHTML = `<i class="fab ${map[key]}"></i>`;
+                    socialBox.appendChild(a);
+                }
+            });
+
+            if (Hls.isSupported()) {
+                if (hlsInstance) hlsInstance.destroy();
+                hlsInstance = new Hls();
+                hlsInstance.loadSource(channel.url);
+                hlsInstance.attachMedia(videoElement);
+                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => videoElement.play().catch(() => {}));
+            } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+                videoElement.src = channel.url;
+                videoElement.play().catch(() => {});
+            }
+
+            document.getElementById('player-view').classList.remove('hide');
+            document.body.style.overflow = 'hidden';
+            window.history.pushState({view: 'player'}, '');
+        }
+
+        function closePlayer() {
+            videoElement.pause();
+            if (hlsInstance) hlsInstance.stopLoad();
+            document.getElementById('player-view').classList.add('hide');
+            document.body.style.overflow = 'auto';
+            if (window.history.state?.view === 'player') window.history.back();
+        }
+
+        window.onpopstate = () => {
+            if (!document.getElementById('player-view').classList.contains('hide')) {
+                closePlayer();
+            }
+        };
+    </script>
 </body>
 </html>
