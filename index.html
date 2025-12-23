@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>HadiTV Global - Live Experience</title>
+    
+    <!-- Frameworks -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --hadi-blue: #007bff;
+            --hadi-dark: #020617;
+            --safe-top: env(safe-area-inset-top);
+            --safe-bottom: env(safe-area-inset-bottom);
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--hadi-dark); 
+            color: white; 
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        /* --- VIBRANT SPLASH SCREEN --- */
+        #splash-screen {
+            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 1)), url('Main_P1.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        .hadi-logo-text {
+            font-size: clamp(3.5rem, 15vw, 6rem);
+            font-weight: 800;
+            letter-spacing: -4px;
+            line-height: 0.85;
+            text-shadow: 0 0 40px rgba(0, 123, 255, 0.4);
+        }
+
+        .tv-glow {
+            color: var(--hadi-blue);
+            text-shadow: 0 0 20px var(--hadi-blue);
+        }
+
+        .btn-vibrant {
+            background: linear-gradient(135deg, #007bff 0%, #7000ff 100%);
+            padding: 20px 80px;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            box-shadow: 0 15px 40px rgba(112, 0, 255, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-vibrant:active { transform: scale(0.92); }
+
+        /* --- CHANNEL CARDS --- */
+        .channel-card {
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        /* Unique Color Accents */
+        .accent-urdu { border-top: 5px solid #10b981; }
+        .accent-malay { border-top: 5px solid #f59e0b; }
+        .accent-azeri { border-top: 5px solid #3b82f6; }
+        .accent-farsi { border-top: 5px solid #ef4444; }
+        .accent-hausa { border-top: 5px solid #8b5cf6; }
+
+        /* --- GEMINI AI INTEGRATION --- */
+        .ai-glass {
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .sparkle-btn {
+            background: linear-gradient(90deg, #4f46e5, #9333ea, #ec4899);
+            background-size: 200% auto;
+            animation: gradient-shift 3s linear infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hide { display: none !important; }
+
+        #main-content {
+            background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.95)), url('Channel_list_p2.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        #player-view {
+            background-image: radial-gradient(circle at top, #1e1b4b 0%, #020617 100%);
+        }
+
+        .social-pill {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .social-pill:active { transform: scale(0.9); background: rgba(255,255,255,0.1); }
+
+        .search-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 40px;
+            overflow: hidden;
+        }
+        .search-container.active {
+            width: 250px;
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Amazing Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 p-8 text-center">
+        <div class="mb-auto mt-20">
+            <div class="hadi-logo-text">HADI<span class="tv-glow">TV</span></div>
+            <div class="text-[10px] tracking-[1em] font-bold opacity-60 mt-4 ml-4">GLOBAL NETWORK</div>
+        </div>
+
+        <div class="mb-20">
+            <button onclick="enterApp()" class="btn-vibrant">
+                START WATCHING
+            </button>
+            <p class="text-[10px] uppercase font-black text-blue-400 mt-8 tracking-widest opacity-80">24/7 Spiritual Connection</p>
+        </div>
+    </div>
+
+    <!-- Vibrant Main UI -->
+    <div id="main-content" class="hide min-h-screen">
+        <header class="bg-white text-black p-6 sticky top-0 z-50 flex justify-between items-center rounded-b-[40px] shadow-2xl">
+            <div class="flex items-center gap-4">
+                <button onclick="goBackToSplash()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-home text-blue-600"></i>
+                </button>
+                <div class="font-black text-3xl tracking-tighter">HADI<span class="text-blue-600">TV</span></div>
+            </div>
+            <div class="flex gap-4 items-center">
+                <div id="search-bar" class="search-container flex items-center rounded-full bg-gray-100 px-3 py-1">
+                    <button onclick="toggleSearch()" class="min-w-[24px] h-8 flex items-center justify-center"><i class="fas fa-search"></i></button>
+                    <input id="channel-search" type="text" placeholder="Search channels..." class="bg-transparent border-none outline-none ml-2 text-sm w-full" oninput="filterChannels()">
+                </div>
+                <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center"><i class="fas fa-bars"></i></div>
+            </div>
+        </header>
+
+        <main class="p-6">
+            <div class="flex items-center justify-between mb-10">
+                <h2 class="text-3xl font-black">Live Now</h2>
+                <div class="flex items-center gap-2 sparkle-btn px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                    <i class="fas fa-sparkles"></i> AI Powered
+                </div>
+            </div>
+
+            <div id="channels-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+                <!-- Channels injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Immersive Player Overlay -->
+    <div id="player-view" class="hide fixed inset-0 z-[200] overflow-y-auto">
+        <div class="p-6 flex items-center justify-between sticky top-0 z-[210] backdrop-blur-md">
+            <button onclick="closePlayer()" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="p-head-name" class="font-bold text-sm tracking-widest uppercase opacity-70"></div>
+            <div class="w-12"></div>
+        </div>
+
+        <div class="w-full aspect-video bg-black sticky top-0 z-[205] shadow-2xl">
+            <video id="video-stream" class="w-full h-full" controls autoplay playsinline></video>
+        </div>
+
+        <div class="p-8">
+            <!-- Header & Social Links -->
+            <div class="flex flex-col gap-6 mb-10">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 id="player-title" class="text-4xl font-black leading-tight"></h1>
+                        <div id="player-lang" class="inline-block mt-3 px-4 py-1 bg-blue-600/20 text-blue-400 rounded-full text-[10px] font-bold uppercase tracking-widest"></div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-lg border border-white/10"><i class="far fa-heart"></i></div>
+                    </div>
+                </div>
+
+                <!-- Social Media Bar -->
+                <div id="social-bar" class="flex flex-wrap gap-3">
+                    <!-- Dynamic Social Buttons -->
+                </div>
+            </div>
+
+            <!-- AI Feature Panel -->
+            <div class="ai-glass p-6 mb-12">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 rounded-full sparkle-btn flex items-center justify-center text-xs">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Gemini Smart Assistant</span>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex gap-3">
+                            <input id="ai-translate-input" type="text" placeholder="Hear something? Type to translate..." class="flex-grow bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm outline-none focus:border-blue-500 transition-all">
+                            <button onclick="aiTranslate()" id="btn-ai-t" class="sparkle-btn px-6 rounded-2xl font-bold text-sm">✨</button>
+                        </div>
+                        <div id="ai-t-result" class="mt-4 text-blue-300 font-medium italic text-sm hidden"></div>
+                    </div>
+
+                    <button onclick="aiGuide()" id="btn-ai-g" class="w-full bg-white text-black font-extrabold py-4 rounded-2xl text-sm hover:bg-blue-50 transition-colors flex items-center justify-center gap-3">
+                        <i class="fas fa-info-circle text-blue-600"></i> What's currently on?
+                    </button>
+                    <div id="ai-g-result" class="mt-4 p-5 bg-black/40 rounded-2xl border border-white/5 text-sm text-gray-300 leading-relaxed hidden"></div>
+                </div>
+            </div>
+
+            <!-- Reception Info -->
+            <div class="bg-white/5 rounded-3xl p-8 border border-white/10 mb-12">
+                <div class="flex items-center gap-4 mb-6">
+                    <i class="fas fa-broadcast-tower text-blue-500 text-2xl"></i>
+                    <h3 class="font-bold text-xs tracking-widest uppercase">Global Reception</h3>
+                </div>
+                <p id="player-freq" class="text-gray-400 text-sm leading-loose whitespace-pre-line"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; 
+        let activeChannel = null;
+
+        const channels = [
+            { 
+                id: 1, name: "HadiTV1", lang: "Urdu", accent: "accent-urdu", 
+                bg: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?q=80&w=800", 
+                frq: "PakSat MM1\nFreq: 4099 H\nSR: 3200", 
+                url: "https://g.decdn.net/haditv.co.uk/haditv1.m3u8",
+                social: {
+                    youtube: "https://www.youtube.com/@HadiTVUR",
+                    facebook: "https://www.facebook.com/HadiTV.OfficialPage",
+                    instagram: "https://www.instagram.com/haditv1official",
+                    web: "https://ur.haditv.co.uk"
+                }
+            },
+            { 
+                id: 2, name: "HadiTV2", lang: "Malay", accent: "accent-malay", 
+                bg: "https://images.unsplash.com/photo-1528127269322-539801943592?q=80&w=800", 
+                frq: "Online Streaming Service\nSouth East Asia Region", 
+                url: "https://g.decdn.net/haditv.co.uk/haditv2.m3u8",
+                social: {
+                    youtube: "https://www.youtube.com/@haditv2indonesia",
+                    facebook: "https://www.facebook.com/Hadi.Tv.Indonesia",
+                    web: "https://id.haditv.co.uk"
+                }
+            },
+            { 
+                id: 3, name: "HadiTV3", lang: "Azeri", accent: "accent-azeri", 
+                bg: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?q=80&w=800", 
+                frq: "Hotbird 13E\nFreq: 11179 H\nSR: 27500", 
+                url: "https://g.decdn.net/haditv.co.uk/haditv3.m3u8",
+                social: {
+                    youtube: "https://www.youtube.com/channel/UCfyGvZupdgD6IKf-AeYzzSQ",
+                    instagram: "https://www.instagram.com/haditv3_official",
+                    tiktok: "https://www.tiktok.com/@haditv3_az",
+                    web: "https://az.haditv.co.uk"
+                }
+            },
+            { 
+                id: 4, name: "HadiTV4", lang: "Farsi", accent: "accent-farsi", 
+                bg: "https://images.unsplash.com/photo-1523293836413-b0266f279f04?q=80&w=800", 
+                frq: "Eutelsat 7C\nMiddle East Beam", 
+                url: "https://g.decdn.net/haditv.co.uk/haditv4.m3u8",
+                social: {
+                    youtube: "https://www.youtube.com/@mostabserin",
+                    instagram: "https://www.instagram.com/haditv_farsi",
+                    telegram: "https://t.me/haditvfarsi",
+                    web: "https://fa.haditv.co.uk"
+                }
+            },
+            { 
+                id: 5, name: "HadiTV5", lang: "Hausa", accent: "accent-hausa", 
+                bg: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?q=80&w=800", 
+                frq: "SES-5 Africa\nMulti-lingual Feed", 
+                url: "https://g.decdn.net/haditv.co.uk/haditv5.m3u8",
+                social: {
+                    facebook: "https://m.facebook.com/ha.haditv/",
+                    whatsapp: "https://chat.whatsapp.com/Erjj9QxcMBn3jcTFoYBgLL",
+                    web: "https://ha.haditv.co.uk"
+                }
+            }
+        ];
+
+        let hls = null;
+        const video = document.getElementById('video-stream');
+
+        // --- GEMINI API HELPERS ---
+        async function askAI(prompt, useSearch = false) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const body = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: "You are the HadiTV Smart Assistant. Be spiritual, helpful, and concise." }] }
+            };
+            if(useSearch) body.tools = [{ "google_search": {} }];
+
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+                    const d = await r.json();
+                    return d.candidates?.[0]?.content?.parts?.[0]?.text;
+                } catch (e) { await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000)); }
+            }
+            return "Unable to connect to AI.";
+        }
+
+        async function aiTranslate() {
+            const txt = document.getElementById('ai-translate-input').value;
+            if(!txt) return;
+            const res = document.getElementById('ai-t-result');
+            res.innerText = "Translating..."; res.classList.remove('hidden');
+            const translation = await askAI(`Translate this from ${activeChannel.lang} to English: "${txt}". Only show the result.`);
+            res.innerText = `“${translation}”`;
+        }
+
+        async function aiGuide() {
+            const res = document.getElementById('ai-g-result');
+            res.innerText = "Checking schedule..."; res.classList.remove('hidden');
+            const summary = await askAI(`Search for the current live schedule of ${activeChannel.name} and explain what kind of program is likely playing now.`, true);
+            res.innerText = summary;
+        }
+
+        // --- CORE UI LOGIC ---
+        function enterApp() {
+            document.getElementById('splash-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('splash-screen').classList.add('hide');
+                document.getElementById('main-content').classList.remove('hide');
+                renderChannels(channels);
+            }, 500);
+        }
+
+        function goBackToSplash() {
+            document.getElementById('main-content').classList.add('hide');
+            document.getElementById('splash-screen').classList.remove('hide');
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.opacity = '1';
+            }, 10);
+        }
+
+        function toggleSearch() {
+            const container = document.getElementById('search-bar');
+            const input = document.getElementById('channel-search');
+            container.classList.toggle('active');
+            if(container.classList.contains('active')) {
+                input.focus();
+            } else {
+                input.value = '';
+                filterChannels();
+            }
+        }
+
+        function filterChannels() {
+            const query = document.getElementById('channel-search').value.toLowerCase();
+            const filtered = channels.filter(c => 
+                c.name.toLowerCase().includes(query) || 
+                c.lang.toLowerCase().includes(query)
+            );
+            renderChannels(filtered);
+        }
+
+        function renderChannels(dataList) {
+            const grid = document.getElementById('channels-grid');
+            if (dataList.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-20 text-center opacity-50">No channels found matching your search.</div>`;
+                return;
+            }
+            grid.innerHTML = dataList.map(c => `
+                <div onclick="openPlayer(${c.id})" class="channel-card ${c.accent} active:scale-95 shadow-xl">
+                    <div class="h-56 bg-cover bg-center relative" style="background-image: url('${c.bg}')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20">
+                                <i class="fas fa-play text-white text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black">${c.name}</h3>
+                        <div class="flex items-center gap-3 mt-2">
+                            <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-white/50">${c.lang} Service</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openPlayer(id) {
+            activeChannel = channels.find(c => c.id === id);
+            document.getElementById('player-title').innerText = activeChannel.name;
+            document.getElementById('p-head-name').innerText = activeChannel.name;
+            document.getElementById('player-lang').innerText = activeChannel.lang + " Streaming";
+            document.getElementById('player-freq').innerText = activeChannel.frq;
+
+            // Render Social Buttons
+            const sBar = document.getElementById('social-bar');
+            sBar.innerHTML = '';
+            const icons = { youtube: 'fa-youtube', facebook: 'fa-facebook', instagram: 'fa-instagram', tiktok: 'fa-tiktok', telegram: 'fa-telegram', whatsapp: 'fa-whatsapp', web: 'fa-globe' };
+            
+            Object.entries(activeChannel.social).forEach(([key, url]) => {
+                if (url && url !== '-') {
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.target = "_blank";
+                    a.className = "social-pill flex items-center gap-3 px-5 py-3 rounded-2xl text-xs font-bold";
+                    a.innerHTML = `<i class="fab ${icons[key] || 'fa-link'} text-lg"></i> ${key.toUpperCase()}`;
+                    sBar.appendChild(a);
+                }
+            });
+
+            if (Hls.isSupported()) {
+                if (hls) hls.destroy();
+                hls = new Hls();
+                hls.loadSource(activeChannel.url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            } else {
+                video.src = activeChannel.url;
+            }
+
+            document.getElementById('player-view').classList.remove('hide');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlayer() {
+            video.pause();
+            document.getElementById('player-view').classList.add('hide');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
